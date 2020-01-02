@@ -1,0 +1,31 @@
+# Use for collecting a password
+$ secureString = Read-Host -AsSecureString
+# ConvertFrom-SecureString $SecureString
+
+
+Function Query-SQL($Query)
+    {
+    $dataSource = "server.domain.tld\instance"
+    $SQLuser = "user"
+    $SQLpwd = "password"
+    $database = "database"
+
+    $connection = New-Object System.Data.SqlClient.SqlConnection
+    $connectionString = "Server=$dataSource;uid=$SQLuser;pwd=$SQLpwd;Database=$database;Integrated Security=true;"
+    $connection.ConnectionString = $connectionString
+    $connection.Open()
+    
+    $command = $connection.CreateCommand()
+    $command.CommandText = $query
+    $result = $command.ExecuteReader()
+    $SQLTable = new-object "System.Data.DataTable"
+    $SQLTable.Load($result)
+    $connection.Close()
+
+    Return $SQLTable
+    }
+
+$Attrib = "accountName"
+$Value = "Name"
+
+Query-SQL "SELECT * FROM Identities WHERE $Attrib = '$Value'"
