@@ -4,7 +4,7 @@ $ secureString = Read-Host -AsSecureString
 
 
 Function Query-SQL($Query)
-    {
+{
     $dataSource = "server.domain.tld\instance"
     $SQLuser = "user"
     $SQLpwd = "password"
@@ -23,7 +23,7 @@ Function Query-SQL($Query)
     $connection.Close()
 
     Return $SQLTable
-    }
+}
 
 $Attrib = "accountName"
 $Value = "Name"
